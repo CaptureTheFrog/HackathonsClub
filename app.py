@@ -11,7 +11,10 @@ app.config['SQLALCHEMY_ECHO'] = True
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy()
-db.init_app(app) #??
+db.init_app(app)
+# Create or upgrade the database within the application context
+with app.app_context():
+    db.create_all()
 
 from users.views import users_blueprint
 
