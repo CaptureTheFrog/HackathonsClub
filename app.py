@@ -1,14 +1,46 @@
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager, current_user
 
 app = Flask(__name__)
-db = SQLAlchemy()
 
 db_name = 'hacksclub.db'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + db_name
+app.config['SQLALCHEMY_ECHO'] = True
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-db.init_app(app)
+db = SQLAlchemy()
+db.init_app(app) #??
+
+from users.views import users_blueprint
+
+app.register_blueprint(users_blueprint)
+
+from functools import wraps
+
+
+def requires_roles(*roles):
+    def wrapper(f):
+        @wraps(f)
+        def wrapped(*args, **kwargs):
+            if current_user.role not in roles:
+                return render_template('errors/403.html')
+            return f(*args, **kwargs)
+        return wrapped
+    return wrapper
+
+
+login_manager = LoginManager()
+login_manager.login_view = 'users.login'
+login_manager.init_app(app)
+
+from models.user import User
+
+
+@login_manager.user_loader
+def load_user(id):
+    return User.query.get(int(id))
+
 
 @app.route('/')
 def index():
