@@ -10,3 +10,4 @@ class Sponsor(db.Model):
     company_email = db.Column(db.String(100)) 
     company_phone = db.Column(db.String(100))
     company_website = db.Column(db.String(100)) 
+    login_id = db.Column(db.Integer, db.ForeignKey(User.id))
