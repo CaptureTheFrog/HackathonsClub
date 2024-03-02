@@ -12,6 +12,9 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy()
 db.init_app(app)
+
+from models.user import User
+
 # Create or upgrade the database within the application context
 with app.app_context():
     db.create_all()
@@ -37,8 +40,6 @@ def requires_roles(*roles):
 login_manager = LoginManager()
 login_manager.login_view = 'users.login'
 login_manager.init_app(app)
-
-from models.user import User
 
 
 @login_manager.user_loader
