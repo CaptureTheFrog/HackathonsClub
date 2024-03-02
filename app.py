@@ -5,6 +5,7 @@ from flask_login import LoginManager, current_user
 app = Flask(__name__)
 
 db_name = 'hacksclub.db'
+app.config['SECRET_KEY'] = 'ABigFatSecretKey'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + db_name
 app.config['SQLALCHEMY_ECHO'] = True
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
