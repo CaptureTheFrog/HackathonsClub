@@ -1,5 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField, FileField, BooleanField
+from wtforms.fields.datetime import DateField
 from wtforms.validators import DataRequired, Email, ValidationError, Length, EqualTo
 import re
 
@@ -61,3 +62,11 @@ class PasswordForm(FlaskForm):
     confirm_new_password = PasswordField(validators=[DataRequired(),
                                                      EqualTo('new_password', message='Both new password fields must be equal.')])
     submit = SubmitField('Change Password')
+
+class CreateEventForm(FlaskForm):
+    title = StringField(validators=[DataRequired(), Email()])
+    start_date = DateField(validators=[DataRequired()])
+    end_date = DateField(validators=[DataRequired()])
+    location = StringField()
+    website = StringField()
+    submit = SubmitField()

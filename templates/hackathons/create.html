@@ -1,13 +1,66 @@
 {% extends "base.html" %}
 
 {% block content %}
+    <div class="column is-5 is-offset-4">
+        <div class="box">
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <div class="notification is-danger">
+                        {% for message in messages %}
+                            {{ message }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+            <form method="post" action="{{ url_for('users.participant_registration') }}">
+                <div class="field">
+                    {{ form.csrf_token() }}
+                    <div class="control">
+                        {{ form.title(class="input", placeholder="Event Name") }}
+                        {% for error in form.title.errors %}
+                                <p class="help is-danger">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="control">
+                        {{ form.start_date(class="input", placeholder="Start Date") }}
+                        {% for error in form.start_date.errors %}
+                            <p class="help is-danger">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="control">
+                        {{ form.end_date(class="input", placeholder="End Date") }}
+                        {% for error in form.end_date.errors %}
+                            <p class="help is-danger">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
 
-<div class="column is-6 is-offset-3">
-    <h3 class="title">Create Event</h3>
+                <div class="field">
+                    <div class="control">
+                        {{ form.location(class="input", placeholder="Location/University") }}
+                        {% for error in form.location.errors %}
+                            <p class="help is-danger">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
 
-    <div class="box">
-        Create Event
+                <div class="field">
+                    <div class="control">
+                        {{ form.website(class="input", placeholder="Website URL") }}
+                        {% for error in form.website.errors %}
+                            <p class="help is-danger">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div>
+                    {{ form.submit(class="button is-info is-centered") }}
+                </div>
+            </form>
+        </div>
     </div>
-</div>
-
 {% endblock %}
