@@ -22,6 +22,16 @@ def login():
     return render_template('users/login.html', form=form)
 
 
+@users_blueprint.route('/logout')
+@login_required
+# @requires_roles('user', 'admin') TODO: CHANGE
+def logout():
+    # log out user
+    logout_user()
+    # redirect user to index page
+    return redirect(url_for('main.index')) # TODO: or just index?
+
+
 def register_user(form, role):
     user = User.query.filter_by(email=form.email.data).first()
     if user:
