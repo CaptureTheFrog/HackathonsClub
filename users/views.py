@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, flash, redirect, url_for, request
 from flask_login import login_user, logout_user, login_required, current_user
-from users.forms import LoginForm, UserRegistrationForm, SponsorRegistrationForm
+from users.forms import LoginForm, UserRegistrationForm, SponsorRegistrationForm, PasswordForm
 from models.user import User
 from app import db, app
 import os
@@ -51,9 +51,9 @@ def profile():
                                 prof_no=current_user.id,
                                 email=current_user.email,
                                 role=current_user.role,
-                                company=current_user.company_name, # .sponsor.company_name?
-                                phone=current_user.phone,
-                                website=current_user.company_website)
+                                company='placeholder', # TODO: get company info from sponsor table
+                                phone='placeholder',
+                                website='placeholder')
     elif current_user.role == 'participant' or current_user.role == 'organizer':
         return render_template('users/profile.html',
                                 prof_no=current_user.id,

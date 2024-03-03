@@ -1,7 +1,6 @@
 from flask import Flask, render_template
-from flask_login import LoginManager, current_user
+from flask_login import LoginManager
 
-from models.hackathon import Hackathon
 from utils.import_hackathons_to_db import import_hackathons_to_db
 
 app = Flask(__name__)
