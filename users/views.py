@@ -98,7 +98,7 @@ def save_picture(form):
 
         if file and allowed_file(file.filename):
             # use company name + extension as filename
-            filename = secure_filename(form.company.data.lower() + '.' + file.filename.rsplit('.', 1)[1].lower())
+            filename = secure_filename(form.company.data + '.' + file.filename.rsplit('.', 1)[1].lower())
             print(file)
             form.logo = os.path.join('static/img/', filename)
             with open(app.config['UPLOAD_FOLDER'] + filename, 'wb') as f:
@@ -125,7 +125,9 @@ def register_user(form, role):
             if sponsor:
                 flash('Email address already exists.')
                 return render_template('users/register.html', form=form)
-            new_sponsor = Sponsor(form.company.data, form.logo, form.email.data, form.phone.data, form.company_website.data, new_user.get_id())
+            # get path to image
+            path = form.company.data + '.' + form.logo.data.rsplit('.', 1)[1].lower()
+            new_sponsor = Sponsor(form.company.data, path, form.email.data, form.phone.data, form.company_website.data, new_user.get_id())
             db.session.add(new_sponsor)
             db.session.commit()
 
