@@ -12,7 +12,7 @@
                     </div>
                 {% endif %}
             {% endwith %}
-            <form method="post" action="{{ url_for('users.participant_registration') }}">
+            <form method="post">
                 <div class="field">
                     {{ form.csrf_token() }}
                     <div class="control">
