@@ -28,8 +28,10 @@ with app.app_context():
         import_hackathons_to_db(db)
 
 from users.views import users_blueprint
+from hackathons.views import hackathons_blueprint
 
 app.register_blueprint(users_blueprint)
+app.register_blueprint(hackathons_blueprint)
 
 from functools import wraps
 
