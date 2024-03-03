@@ -18,7 +18,7 @@ def login():
             return render_template('users/login.html', form=form)
         login_user(user)
         # TODO: render appropriate page based on user role
-        return redirect(url_for('main.index'))
+        return redirect(url_for('index'))
     return render_template('users/login.html', form=form)
 
 
@@ -29,12 +29,13 @@ def logout():
     # log out user
     logout_user()
     # redirect user to index page
-    return redirect(url_for('main.index')) # TODO: or just index?
+    return redirect(url_for('index')) # TODO: change redirect
+
 
 @users_blueprint.route('/profile')
 @login_required
 def profile():
-    return render_template('users/profile.html')
+    return render_template('users/profile.html') # TODO: replace with actual code
 
 
 def register_user(form, role):
@@ -48,7 +49,7 @@ def register_user(form, role):
     db.session.add(new_user)
     db.session.commit()
     login_user(new_user)
-    return redirect(url_for('main.index'))
+    return redirect(url_for('index')) # TODO: remove?
 
 
 @users_blueprint.route('/register/participant', methods=['GET', 'POST'])
@@ -56,7 +57,7 @@ def participant_registration():
     form = UserRegistrationForm()
     if form.validate_on_submit():
         register_user(form, 'participant')
-        return redirect(url_for('main.index'))
+        return redirect(url_for('index')) # TODO: change redirect
     return render_template('users/register.html', form=form, role='participant')
 
 
@@ -65,7 +66,7 @@ def organizer_registration():
     form = UserRegistrationForm()
     if form.validate_on_submit():
         register_user(form, 'organizer')
-        return redirect(url_for('main.index'))
+        return redirect(url_for('index')) # TODO: change redirect
     return render_template('users/register.html', form=form, role='organizer')
 
 
@@ -74,7 +75,7 @@ def sponsor_registration():
     form = SponsorRegistrationForm()
     if form.validate_on_submit():
         register_user(form, 'sponsor')
-        return redirect(url_for('main.index'))
+        return redirect(url_for('index')) # TODO: change redirect
     return render_template('users/register.html', form=form, role='sponsor')
 
 
