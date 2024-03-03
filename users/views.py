@@ -96,9 +96,7 @@ def save_picture(form):
             flash('No file part')
             return redirect(request.url)
 
-        file = request.files['picture'] # BUG: this displays on profile
-        if file.filename == '':
-            return redirect(request.url)
+        file = request.files['picture']
 
         if file and allowed_file(file.filename):
             # use company name + extension as filename
@@ -116,7 +114,8 @@ def register_user(form, role):
         flash('Email address already exists.')
         return render_template('users/register.html', form=form)
 
-    save_picture(form)
+    if role == 'sponsor':
+        save_picture(form)
 
     new_user = User(email=form.email.data,
                     password=form.password.data,
