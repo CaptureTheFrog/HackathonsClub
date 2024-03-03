@@ -33,10 +33,10 @@ if __name__ == '__main__':
 				'name' : name,
 				'url' : website_url,
 				'image' : img,
-				'start_date' : datetime.datetime(i, months.index(start.split(" ")[1].lower()) + 1, int(start.split(" ")[0])).isoformat(),
+				'start_date' : datetime.datetime(i - int(months.index(start.split(" ")[1].lower()) + 1 >= 9), months.index(start.split(" ")[1].lower()) + 1, int(start.split(" ")[0])).isoformat(),
 				'location_name' : location,
 				'attendees' : None,
-				'end_date' : datetime.datetime(i, months.index(end.split(" ")[1].lower()) + 1, int(end.split(" ")[0])).isoformat(),
+				'end_date' : datetime.datetime(i - int(months.index(end.split(" ")[1].lower()) + 1 >= 9), months.index(end.split(" ")[1].lower()) + 1, int(end.split(" ")[0])).isoformat(),
 				'digital_only' : digital_status
 			}
 			h.append(nh)

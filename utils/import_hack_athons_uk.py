@@ -45,10 +45,10 @@ if __name__ == '__main__':
 			nh = {
 				'name': hackathon['name'],
 				'url': hackathon.get('website') or None,
-				'start_date': datetime.datetime(year, start_month, start_day).isoformat(),
+				'start_date': datetime.datetime(year - int(start_month >= 9), start_month, start_day).isoformat(),
 				'location_name': location_name,
 				'attendees': (hackathon['attendees'] if hackathon['attendees'] != 'TBC' else None),
-				'end_date': datetime.datetime(year, end_month, end_day).isoformat(),
+				'end_date': datetime.datetime(year - int(end_month >= 9), end_month, end_day).isoformat(),
 				'digital_only': digital
 			}
 
