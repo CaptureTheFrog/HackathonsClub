@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2 class="title is-2" >Choose Your Role</h2>
+    <ul>
+        <li><a href="{{ url_for('users.participant_registration') }}">Participant</a></li>
+        <li><a href="{{ url_for('users.organizer_registration') }}">Organizer</a></li>
+        <li><a href="{{ url_for('users.sponsor_registration') }}">Sponsor</a></li>
+    </ul>
+{% endblock %}

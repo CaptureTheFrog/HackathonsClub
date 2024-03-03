@@ -1,39 +1,28 @@
-{% extends "base.html" %}
+<!-- templates/users/register.html -->
+{% extends 'base.html' %}
+
+{% block title %}Registration{% endblock %}
 
 {% block content %}
     <div class="column is-5 is-offset-4">
-        <h3 class="title is-3">Register</h3>
         <div class="box">
             {% with messages = get_flashed_messages() %}
                 {% if messages %}
                     <div class="notification is-danger">
-                        {{ messages[0] }}. Go to <a href="{{ url_for('users.login') }}">login page</a>.
+                        {% for message in messages %}
+                            {{ message }}
+                        {% endfor %}
                     </div>
                 {% endif %}
             {% endwith %}
-            <form method="POST">
+        {% if role == 'participant' %}
+            <form method="post" action="{{ url_for('users.participant_registration') }}"> <!-- users?? -->
                 <div class="field">
                     {{ form.csrf_token() }}
                     <div class="control">
                         {{ form.email(class="input", placeholder="Email") }}
                         {% for error in form.email.errors %}
-                            <p class="help is-danger">{{ error }}</p>
-                        {% endfor %}
-                    </div>
-                </div>
-                <div class="field">
-                    <div class="control">
-                        {{ form.firstname(class="input", placeholder="First Name") }}
-                        {% for error in form.firstname.errors %}
-                            <p class="help is-danger">{{ error }}</p>
-                        {% endfor %}
-                    </div>
-                </div>
-                <div class="field">
-                    <div class="control">
-                        {{ form.lastname(class="input", placeholder="Last Name") }}
-                        {% for error in form.lastname.errors %}
-                            <p class="help is-danger">{{ error }}</p>
+                                <p class="help is-danger">{{ error }}</p>
                         {% endfor %}
                     </div>
                 </div>
@@ -53,12 +42,105 @@
                         {% endfor %}
                     </div>
                 </div>
-
-
                 <div>
                     {{ form.submit(class="button is-info is-centered") }}
                 </div>
             </form>
+        {% elif role == 'organizer' %}
+        <form method="post" action="{{ url_for('users.organizer_registration') }}"> <!-- users?? -->
+                <div class="field">
+                    {{ form.csrf_token() }}
+                    <div class="control">
+                        {{ form.email(class="input", placeholder="Email") }}
+                        {% for error in form.email.errors %}
+                                <p class="help is-danger">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="control">
+                        {{ form.password(class="input", placeholder="Password") }}
+                        {% for error in form.password.errors %}
+                            <p class="help is-danger">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="control">
+                        {{ form.confirm_password(class="input", placeholder="Confirm Password") }}
+                        {% for error in form.confirm_password.errors %}
+                            <p class="help is-danger">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div>
+                    {{ form.submit(class="button is-info is-centered") }}
+                </div>
+            </form>
+        {%  elif role == 'sponsor' %}
+        <form method="post" action="{{ url_for('users.sponsor_registration') }}"> <!-- users?? -->
+                <div class="field">
+                    {{ form.csrf_token() }}
+                    <div class="control">
+                        {{ form.email(class="input", placeholder="Email") }}
+                        {% for error in form.email.errors %}
+                                <p class="help is-danger">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="control">
+                        {{ form.password(class="input", placeholder="Password") }}
+                        {% for error in form.password.errors %}
+                            <p class="help is-danger">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="control">
+                        {{ form.confirm_password(class="input", placeholder="Confirm Password") }}
+                        {% for error in form.confirm_password.errors %}
+                            <p class="help is-danger">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="control">
+                        {{ form.phone(class="input", placeholder="Phone Number") }}
+                        {% for error in form.phone.errors %}
+                            <p class="help is-danger">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="control">
+                        {{ form.company(class="input", placeholder="Company") }}
+                        {% for error in form.company.errors %}
+                            <p class="help is-danger">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="control">
+                        {{ form.company_website(class="input", placeholder="Company Website") }}
+                        {% for error in form.company_website.errors %}
+                            <p class="help is-danger">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+               <div class="field">
+                   <div class="control">
+                       {{ form.logo(class="input", placeholder="Logo") }}
+                       {% for error in form.logo.errors %}
+                           <p class="help is-danger">{{ error }}</p>
+                       {% endfor %}
+                   </div>
+               </div>
+                <div>
+                    {{ form.submit(class="button is-info is-centered") }}
+                </div>
+            </form>
+        {% endif %}
         </div>
     </div>
 {% endblock %}

@@ -18,7 +18,7 @@
                                 Home
                             </a>
                             {% if current_user.is_anonymous %}
-                                <a href="{{ url_for('users.register') }}" class="navbar-item">
+                                <a href="{{ url_for('users.role_selection') }}" class="navbar-item">
                                     Register
                                 </a>
                             {% endif %}
