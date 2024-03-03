@@ -8,9 +8,11 @@
         <br>
         <p class="has-text-left">Find out more</p>
         <a href="{{ url_for('hackathons.hackathons') }}" type="button" class="button is-info is-centered">Events</a>
-        <a href="{{ url_for('hackathons.create') }}" type="button" class="button is-info is-centered">Get Organizing</a>
-        {% if current_user.is_authenticated and current_user.role == 'sponsor'%}
-            <button type="button" class="button is-info is-centered">Get Sponsoring</button>
+        {%  if current_user.role == 'organizer' or current_user.is_anonymous %}
+            <a href="{{ url_for('hackathons.create') }}" type="button" class="button is-info is-centered">Get Organizing</a>
+        {% endif %}
+        {% if current_user.role == 'sponsor' or current_user.is_anonymous %}
+            <a href="{{ url_for('hackathons.sponsor_events') }}" type="button" class="button is-info is-centered">Get Sponsoring</a>
         {% endif %}
 
 
