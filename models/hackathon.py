@@ -15,11 +15,10 @@ class Hackathon(db.Model):
     phone = db.Column(db.String(100))
     postal_address = db.Column(db.String(100))
 
-    def __init__(self, title, start_date, end_date, institution, location, event_type, description, email, phone, postal_address, organisers):
+    def __init__(self, title, start_date, end_date, location, event_type, description, email, phone, postal_address, organisers):
         self.title = title
         self.start_date = start_date
         self.end_date = end_date
-        self.institution = institution
         self.location = location
         self.event_type = event_type
         self.description = description
