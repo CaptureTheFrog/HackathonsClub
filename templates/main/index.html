@@ -8,8 +8,10 @@
         <br>
         <p class="has-text-left">Find out more</p>
         <a href="{{ url_for('hackathons.hackathons') }}" type="button" class="button is-info is-centered">Events</a>
-        <button type="button" class="button is-info is-centered">Get Organizing</button>
-        <button type="button" class="button is-info is-centered">Get Sponsoring</button>
+        <a href="{{ url_for('hackathons.create') }}" type="button" class="button is-info is-centered">Get Organizing</a>
+        {% if current_user.is_authenticated and current_user.role == 'sponsor'%}
+            <button type="button" class="button is-info is-centered">Get Sponsoring</button>
+        {% endif %}
 
 
 
