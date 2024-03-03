@@ -27,39 +27,24 @@ with app.app_context():
     if len(db.session.query(Hackathon).all()) == 0:
         import_hackathons_to_db(db)
 
+
+@app.route('/')
+def index():
+    return render_template('main/index.html')
+
 from users.views import users_blueprint
 from hackathons.views import hackathons_blueprint
 
 app.register_blueprint(users_blueprint)
 app.register_blueprint(hackathons_blueprint)
 
-from functools import wraps
-
-
-def requires_roles(*roles):
-    def wrapper(f):
-        @wraps(f)
-        def wrapped(*args, **kwargs):
-            if current_user.role not in roles:
-                return render_template('errors/403.html')
-            return f(*args, **kwargs)
-        return wrapped
-    return wrapper
-
-
 login_manager = LoginManager()
 login_manager.login_view = 'users.login'
 login_manager.init_app(app)
 
-
 @login_manager.user_loader
 def load_user(id):
     return User.query.get(int(id))
-
-
-@app.route('/')
-def index():
-    return render_template('main/index.html')
 
 @app.errorhandler(400)
 def bad_request(error):
