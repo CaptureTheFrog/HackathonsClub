@@ -1,6 +1,7 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, redirect, url_for
 from db import db
 from models.hackathon import Hackathon
+from users.forms import CreateEventForm
 from utils.decorators import requires_roles
 from flask_login import login_required
 
@@ -16,24 +17,12 @@ def hackathons():
 @login_required
 @requires_roles('organizer')
 def create():
-    return render_template('hackathons/create.html')
-    # Placeholder code
-    # form = EventForm()
-    # if form.validate_on_submit():
-    #     event = Event.query.filter_by(name=form.name.data).first() # change table name
-    #     if event:
-    #         flash('Event already exists')
-    #         return render_template('events/create.html', form=form)
-    #     new_event = Event(name=form.name.data,
-    #                         description=form.description.data,
-    #                         date=form.date.data,
-    #                         location=form.location.data,
-    #                         capacity=form.capacity.data)
-    #     db.session.add(new_event)
-    #     db.session.commit()
-    #     flash('Event created')
-    #     return redirect(url_for('events.index'))
-    # return render_template('events/create.html', form=form)
+    form = CreateEventForm()
+    if form.validate_on_submit():
+        db.session.add(Hackathon(form.title.data, form.start_date.data, form.end_date.data, form.location.data, 'Hackathon', '', '', '', '', form.website.data))
+        db.session.commit()
+        return redirect(url_for('index'))
+    return render_template('hackathons/create.html', form=form)
 
 
 @hackathons_blueprint.route('/sponsor_events', methods=['GET', 'POST'])
