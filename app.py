@@ -1,6 +1,8 @@
 from flask import Flask, render_template
-from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, current_user
+
+from models.hackathon import Hackathon
+from utils.import_hackathons_to_db import import_hackathons_to_db
 
 app = Flask(__name__)
 
@@ -10,7 +12,8 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + db_name
 app.config['SQLALCHEMY_ECHO'] = True
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-db = SQLAlchemy()
+from db import db
+
 db.init_app(app)
 
 from models.user import User
@@ -18,6 +21,9 @@ from models.user import User
 # Create or upgrade the database within the application context
 with app.app_context():
     db.create_all()
+    # uncomment to add hackathons to db
+    if len(db.session.query(Hackathon).all()) == 0:
+        import_hackathons_to_db(db)
 
 from users.views import users_blueprint
 

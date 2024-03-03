@@ -1,6 +1,6 @@
 import bcrypt
 from flask_login import UserMixin
-from app import db, app
+from db import db
 
 
 class User(db.Model, UserMixin):
