@@ -1,10 +1,11 @@
 from flask import Blueprint, render_template, flash, redirect, url_for, request
-from flask_login import login_user, logout_user, login_required
+from flask_login import login_user, logout_user, login_required, current_user
 from users.forms import LoginForm, UserRegistrationForm, SponsorRegistrationForm
 from models.user import User
 from app import db, app
 import os
 from werkzeug.utils import secure_filename
+from models.sponsor import Sponsor
 
 UPLOAD_FOLDER = os.path.join(app.root_path, 'static/img/')
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
@@ -42,7 +43,13 @@ def logout():
 @users_blueprint.route('/profile')
 @login_required
 def profile():
-    return render_template('users/profile.html') # TODO: replace with actual code
+    data = {}
+    if current_user.role == 'sponsor':
+        data = db.session.query(Sponsor).join(User, User.id == Sponsor.login_id).all()
+        
+        
+    return render_template('users/profile.html', data=data) # TODO: replace with actual code
+
 
 
 def allowed_file(filename):
@@ -65,6 +72,7 @@ def save_picture(form):
             # use company name + extension as filename
             filename = secure_filename(form.company.data.lower() + '.' + file.filename.rsplit('.', 1)[1].lower())
             print(file)
+            form.logo = os.path.join('static/img/', filename)
             with open(app.config['UPLOAD_FOLDER'] + filename, 'wb') as f:
                 f.write(file.read())
 
@@ -83,6 +91,16 @@ def register_user(form, role):
                     role=role)
     db.session.add(new_user)
     db.session.commit()
+
+    if role == 'sponsor':
+            sponsor = Sponsor.query.filter_by(company_name=form.company.data).first()
+            if sponsor:
+                flash('Email address already exists.')
+                return render_template('users/register.html', form=form)
+            new_sponsor = Sponsor(form.company.data, form.logo, form.email.data, form.phone.data, form.company_website.data, new_user.get_id())
+            db.session.add(new_sponsor)
+            db.session.commit()
+
     login_user(new_user)
     return redirect(url_for('index')) # TODO: remove?
 

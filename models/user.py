@@ -2,7 +2,7 @@ import bcrypt
 from flask_login import UserMixin
 from db import db
 
-
+# TODO edit functionality
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
 

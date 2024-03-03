@@ -17,6 +17,8 @@ from db import db
 db.init_app(app)
 
 from models.user import User
+from models.sponsor import Sponsor
+from models.hackathon import Hackathon
 
 # Create or upgrade the database within the application context
 with app.app_context():

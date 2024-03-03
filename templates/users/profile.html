@@ -1,10 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-Amongus
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block content %}
+
+<ul>
+    {% for sponsor in data %}
+        <li>
+            Sponsor: {{ sponsor.company_name }} ({{ sponsor.company_email }}) 
+            <img src="{{ sponsor.company_logo }}">
+        </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}
