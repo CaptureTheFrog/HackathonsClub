@@ -98,7 +98,6 @@ def save_picture(form):
 
         file = request.files['picture'] # BUG: this displays on profile
         if file.filename == '':
-            flash('No selected file')
             return redirect(request.url)
 
         if file and allowed_file(file.filename):
