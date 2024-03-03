@@ -67,7 +67,7 @@ class PasswordForm(FlaskForm):
 
 
 class CreateEventForm(FlaskForm):
-    title = StringField(validators=[DataRequired(), Email()])
+    title = StringField(validators=[DataRequired()])
     start_date = DateField(validators=[DataRequired()])
     end_date = DateField(validators=[DataRequired()])
     location = StringField()
