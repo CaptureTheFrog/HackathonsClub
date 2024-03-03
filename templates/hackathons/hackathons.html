@@ -1,13 +1,39 @@
 {% extends "base.html" %}
 
 {% block content %}
+    <script src="//cdn.datatables.net/1.13.7/js/jquery.js"></script>
+    <script src="//cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="//cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bulma.min.css" />
+<script src="//cdn.datatables.net/1.13.7/js/dataTables.bulma.min.js"></script>
+<table id="hackathons" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th>Event</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Institution</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for event in data %}
+            <tr>
+                <td>{{ event.title }}</td>
+                <td>
+                    {{ event.start_date }}
+                </td>
+                <td>
+                    {{ event.end_date }}
+                </td>
+                <td>
+                    {{ event.institution }}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 
-<ul>
-    {% for event in data %}
-        <li>
-            {{ event.title }}
-        </li>
-    {% endfor %}
-</ul>
+
+    <script>var table = new DataTable('#hackathons');</script>
 
 {% endblock %}
