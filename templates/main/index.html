@@ -2,17 +2,18 @@
 
 {% block content %}
 
-<div id="block-title">
-    <div class="box">
-        <h1 class="title is-2 has-text-primary" >Making hackathons accessible to anyone</h1>
-        <br>
-        <p class="has-text-left">Find out more</p>
-        <a href="{{ url_for('hackathons.hackathons') }}" type="button" class="button is-info is-centered">Events</a>
-        <button type="button" class="button is-info is-centered">Get Organizing</button>
-        <button type="button" class="button is-info is-centered">Get Sponsoring</button>
+    <div id="block-title">
+        <div class="box">
+            <h1 class="title is-2 has-text-primary">Making hackathons accessible to anyone</h1>
+            <br>
+            <img src="/static/img/stock_photo.png">
+            <br>
+            <p class="has-text-left">Find out more</p>
+            <a href="{{ url_for('hackathons.hackathons') }}" type="button" class="button is-info is-centered">Events</a>
+            <button type="button" class="button is-info is-centered">Get Organizing</button>
+            <button type="button" class="button is-info is-centered">Get Sponsoring</button>
 
 
-
-</div>
+        </div>
 
 {% endblock %}

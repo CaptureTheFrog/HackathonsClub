@@ -5,69 +5,56 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>HacksClub</title>
-    <link rel="stylesheet" href="/static/main.css" />
+    <link rel="stylesheet" href="/static/main.css"/>
 </head>
 <body>
-    <section class="hero is-primary is-fullheight">
-        <div class="hero-head">
-            <nav class="navbar">
-                <div class="container">
-                    <div id="navbarMenuHeroA" class="navbar-menu">
-                        <div class="navbar-end">
-                            <a href="{{ url_for('index') }}" class="navbar-item">
-                                Home
+<section class="hero is-primary is-fullheight">
+    <div class="hero-head">
+        <nav class="navbar">
+            <div class="container">
+                <div id="navbarMenuHeroA" class="navbar-menu"
+                     style="flex-direction: row; justify-content: space-between;">
+                    <img src="../static/img/HacksClub_Logo.svg"
+                         style="height: 10rem !important; align-self: flex-start">
+                    <div class="navbar-end">
+                        <a href="{{ url_for('index') }}" class="navbar-item" style="color: #16E19C ;">
+                            Home
+                        </a>
+                        {% if current_user.is_anonymous %}
+                            <a href="{{ url_for('users.role_selection') }}" class="navbar-item"
+                               style="color: #16E19C ;">
+                                Register
                             </a>
-                            {% if current_user.is_anonymous %}
-                                <a href="{{ url_for('users.role_selection') }}" class="navbar-item">
-                                    Register
-                                </a>
-                            {% endif %}
-                            {% if current_user.is_anonymous %}
-                                <a href="{{ url_for('users.login') }}" class="navbar-item">
-                                    Login
-                                </a>
-                            {% endif %}
-                            {% if current_user.is_authenticated %}
-                                <a href="{{ url_for('users.profile') }}" class="navbar-item">
-                                    Profile
-                                </a>
-                            {% endif %}
-                            {% if current_user.is_authenticated %}
-                                <a href="{{ url_for('users.logout') }}" class="navbar-item">
-                                    Logout
-                                </a>
-                            {% endif %}
-                            {% if current_user.is_authenticated and current_user.role == 'organizer' %}
-                                <a href="{{ url_for('events.create') }}" class="navbar-item">
-                                    Create Event
-                                </a>
-                            {% endif %}
-                            {% if current_user.is_authenticated and current_user.role == ('organizer' or 'sponsor') %}
-                                <a href="{{ url_for('events.postings') }}" class="navbar-item">
-                                    Postings
-                                </a>
-                            {% endif %}
-                            {% if current_user.is_authenticated and current_user.role == 'organizer' %}
-                                <a href="{{ url_for('events.sponsors') }}" class="navbar-item">
-                                    Sponsors
-                                </a>
-                            {% endif %}
-                            {% if current_user.is_authenticated and current_user.role == 'sponsor' %}
-                                <a href="{{ url_for('events.sponsor_events') }}" class="navbar-item">
-                                    Events
-                                </a>
-                            {% endif %}
-                        </div>
+                        {% endif %}
+                        {% if current_user.is_anonymous %}
+                            <a href="{{ url_for('users.login') }}" class="navbar-item"
+                               style="color: #16E19C ;">
+                                Login
+                            </a>
+                        {% endif %}
+                        {% if current_user.is_authenticated %}
+                            <a href="{{ url_for('users.logout') }}" class="navbar-item"
+                               style="color: #16E19C ;">
+                                Logout
+                            </a>
+                        {% endif %}
+                        {% if current_user.is_authenticated %}
+                            <a href="{{ url_for('users.profile') }}" class="navbar-item"
+                               style="color: #16E19C ;">
+                                Profile
+                            </a>
+                        {% endif %}
                     </div>
                 </div>
-            </nav>
-        </div>
-        <div class="hero-body">
-            <div class="container has-text-centered">
-                {% block content %}
-                {% endblock %}
             </div>
+        </nav>
+    </div>
+    <div class="hero-body">
+        <div class="container has-text-centered">
+            {% block content %}
+            {% endblock %}
         </div>
-    </section>
+    </div>
+</section>
 </body>
 </html>
