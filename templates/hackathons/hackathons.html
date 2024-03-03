@@ -18,7 +18,15 @@
         <tbody>
         {% for event in data %}
             <tr>
-                <td>{{ event.title }}</td>
+            <td>
+            {% if event.url %}
+                <a href="{{ event.url }}" style="text-color: #ccf; text-decoration: underline">
+                    {% endif %}
+                {{ event.title }}
+            {% if event.url %}
+                </a>
+                    {% endif %}
+            </td>
                 <td>
                     {{ event.start_date }}
                 </td>

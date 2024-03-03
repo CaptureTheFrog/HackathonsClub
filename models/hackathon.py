@@ -14,8 +14,9 @@ class Hackathon(db.Model):
     email = db.Column(db.String(100), nullable=False)
     phone = db.Column(db.String(100))
     postal_address = db.Column(db.String(100))
+    url = db.Column(db.String(256))
 
-    def __init__(self, title, start_date, end_date, location, event_type, description, email, phone, postal_address):
+    def __init__(self, title, start_date, end_date, location, event_type, description, email, phone, postal_address, url):
         self.title = title
         self.start_date = start_date
         self.end_date = end_date
@@ -25,3 +26,4 @@ class Hackathon(db.Model):
         self.email = email
         self.phone = phone
         self.postal_address = postal_address
+        self.url = url

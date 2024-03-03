@@ -16,7 +16,8 @@ def import_hackathons_to_db(db: SQLAlchemy):
                               '',
                               '',
                               '',
-                              ''
+                              '',
+                              h['url']
                               )
         db.session.add(hackathon)
     db.session.commit()
