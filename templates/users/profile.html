@@ -2,13 +2,55 @@
 
 {% block content %}
 
-<ul>
-    {% for sponsor in data %}
-        <li>
-            Sponsor: {{ sponsor.company_name }} ({{ sponsor.company_email }}) 
-            <img src="{{ sponsor.company_logo }}">
-        </li>
-    {% endfor %}
-</ul>
+<div class="column is-6 is-offset-3">
+    <h3 class="title">Your Profile</h3>
+
+    <div class="box">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="notification is-danger">
+                    {{ messages[0] }}
+                </div>
+            {% endif %}
+        {% endwith %}
+        <table class="table">
+        <tbody>
+            <tr>
+                <th>Profile No.</th>
+                <th>{{ prof_no }}</th>
+            </tr>
+            {% if role == 'sponsor' %}
+                <tr>
+                    <th>Company Name</th>
+                    <th>{{ company_name }}</th>
+                </tr>
+                <tr>
+                    <th>Website</th>
+                    <th>{{ website }}</th>
+                </tr>
+            {% endif %}
+            <tr>
+                <th>Email</th>
+                <th>{{ email }}</th>
+            </tr>
+            {% if role == 'sponsor' %}
+                <tr>
+                    <th>Phone No.</th>
+                    <th>{{ phone }}</th>
+                </tr>
+            {% endif %}
+            <tr>
+                <th>Role</th>
+                <th>{{ role }}</th>
+            <tr>
+                <th>Password</th>
+                <td><a style='color: blue' href="{{ url_for('users.update_password') }}">Change Password</a></td>
+            </tr>
+
+        </tbody>
+        </table>
+    </div>
+</div>
+
 
 {% endblock %}
