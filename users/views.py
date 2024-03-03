@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, flash, redirect, url_for, request
 from flask_login import login_user, logout_user, login_required, current_user
-from users.forms import LoginForm, UserRegistrationForm, SponsorRegistrationForm
+from users.forms import LoginForm, UserRegistrationForm, SponsorRegistrationForm, PasswordForm
 from models.user import User
 from app import db, app
 import os
@@ -32,7 +32,6 @@ def login():
 
 @users_blueprint.route('/logout')
 @login_required
-# @requires_roles('user', 'admin') TODO: CHANGE
 def logout():
     # log out user
     logout_user()
@@ -40,16 +39,45 @@ def logout():
     return redirect(url_for('index')) # TODO: change redirect
 
 
+from utils.decorators import requires_roles
+
 @users_blueprint.route('/profile')
 @login_required
+@requires_roles('participant', 'organizer', 'sponsor')
 def profile():
     data = {}
     if current_user.role == 'sponsor':
-        data = db.session.query(Sponsor).join(User, User.id == Sponsor.login_id).all()
-        
-        
-    return render_template('users/profile.html', data=data) # TODO: replace with actual code
+        return render_template('users/profile.html',
+                                prof_no=current_user.id,
+                                email=current_user.email,
+                                role=current_user.role,
+                                company='placeholder', # TODO: get company info from sponsor table
+                                phone='placeholder',
+                                website='placeholder')
+    elif current_user.role == 'participant' or current_user.role == 'organizer':
+        return render_template('users/profile.html',
+                                prof_no=current_user.id,
+                                email=current_user.email,
+                                role=current_user.role)
 
+@users_blueprint.route('/update_password', methods=['GET', 'POST'])
+@login_required
+def update_password():
+    form = PasswordForm()
+    if form.validate_on_submit():
+        if not current_user.verify_password(form.current_password.data):
+            flash('Incorrect current password.')
+            return render_template('users/update_password.html', form=form)
+
+        if current_user.verify_password(form.new_password.data):
+            flash('New password cannot be the same as the current password.')
+            return render_template('users/update_password.html', form=form)
+
+        current_user.password = form.new_password.data
+        db.session.commit()
+        flash('Password updated successfully.')
+        return redirect(url_for('users.profile'))
+    return render_template('users/update_password.html', form=form)
 
 
 def allowed_file(filename):
