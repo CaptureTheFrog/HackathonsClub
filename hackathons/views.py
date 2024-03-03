@@ -44,3 +44,22 @@ def sponsor_events():
     # Placeholder code
     # events = Event.query.all() # change table name
     # return render_template('events/sponsor_events.html', events=events)
+
+
+@hackathons_blueprint.route('/postings', methods=['GET', 'POST'])
+@login_required
+@requires_roles('organizer')
+def postings():
+    return render_template('hackathons/postings.html')
+    # Placeholder code
+    # postings = Posting.query.all() # change table name
+    # return render_template('events/postings.html', postings=postings)
+
+
+@hackathons_blueprint.route('/sponsors', methods=['GET', 'POST'])
+@login_required
+@requires_roles('organizer')
+def sponsors():
+    return render_template('hackathons/sponsors.html')
+    # Placeholder code
+    # show all sponsors
