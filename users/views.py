@@ -47,13 +47,18 @@ from utils.decorators import requires_roles
 def profile():
     data = {}
     if current_user.role == 'sponsor':
+        # get sponsor info from sponsor table
+        sponsor = Sponsor.query.filter_by(user_id=current_user.id).first()
+        data['company'] = sponsor.company_name
+        data['phone'] = sponsor.company_phone
+        data['website'] = sponsor.company_website
         return render_template('users/profile.html',
                                 prof_no=current_user.id,
                                 email=current_user.email,
                                 role=current_user.role,
-                                company='placeholder', # TODO: get company info from sponsor table
-                                phone='placeholder',
-                                website='placeholder')
+                                company=data['company'],
+                                phone=data['phone'],
+                                website=data['website'])
     elif current_user.role == 'participant' or current_user.role == 'organizer':
         return render_template('users/profile.html',
                                 prof_no=current_user.id,
@@ -91,9 +96,8 @@ def save_picture(form):
             flash('No file part')
             return redirect(request.url)
 
-        file = request.files['picture']
+        file = request.files['picture'] # BUG: this displays on profile
         if file.filename == '':
-            flash('No selected file')
             return redirect(request.url)
 
         if file and allowed_file(file.filename):

@@ -10,7 +10,8 @@ class Sponsor(db.Model):
     company_email = db.Column(db.String(100)) 
     company_phone = db.Column(db.String(100))
     company_website = db.Column(db.String(100)) 
-    login_id = db.Column(db.Integer)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), unique=True, nullable=False)
+    user = db.relationship('User', backref='sponsor', uselist=False, primaryjoin="Sponsor.user_id == User.id")
 
     def __init__(self, name, logo, email, phone, website, login):
         self.company_name = name
@@ -18,4 +19,4 @@ class Sponsor(db.Model):
         self.company_email = email
         self.company_phone = phone
         self.company_website = website
-        self.login_id = login
+        self.user_id = login
