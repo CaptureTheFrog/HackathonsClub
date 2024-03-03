@@ -31,6 +31,11 @@ def logout():
     # redirect user to index page
     return redirect(url_for('main.index')) # TODO: or just index?
 
+@users_blueprint.route('/profile')
+@login_required
+def profile():
+    return render_template('users/profile.html')
+
 
 def register_user(form, role):
     user = User.query.filter_by(email=form.email.data).first()
