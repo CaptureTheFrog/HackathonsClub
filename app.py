@@ -5,12 +5,19 @@ from flask_login import LoginManager, current_user
 app = Flask(__name__)
 
 db_name = 'hacksclub.db'
+app.config['SECRET_KEY'] = 'ABigFatSecretKey'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + db_name
 app.config['SQLALCHEMY_ECHO'] = True
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy()
-db.init_app(app) #??
+db.init_app(app)
+
+from models.user import User
+
+# Create or upgrade the database within the application context
+with app.app_context():
+    db.create_all()
 
 from users.views import users_blueprint
 
@@ -33,8 +40,6 @@ def requires_roles(*roles):
 login_manager = LoginManager()
 login_manager.login_view = 'users.login'
 login_manager.init_app(app)
-
-from models.user import User
 
 
 @login_manager.user_loader
